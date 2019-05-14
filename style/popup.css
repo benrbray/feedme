@@ -1,0 +1,127 @@
+body {
+	font-family: "Open Sans", "Segoe UI", sans-serif;
+	font-size: 14px;
+	color: #333;
+	padding: 0;
+	margin: 0;
+}
+
+#popup-container {
+	width: 300px;
+	height: 400px;
+}
+
+/* Pages ---------------------------------------------------------------------*/
+
+.page {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	width: 100%;
+	height: 100%;
+}
+
+/* Title Bar -----------------------------------------------------------------*/
+
+.title-bar {
+	position: relative;
+	height: 40px;
+	
+	text-align: center;
+	line-height: 40px;
+	vertical-align: center;
+	background-color: #eee;
+	border-bottom: 2px solid #ccc;
+}
+
+.title-btn {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+	line-height: 30px;
+	font-size: 22px;
+}
+
+.title-btn:hover {
+	background-color: #ddd;
+}
+
+/* Feed List -----------------------------------------------------------------*/
+
+#feed-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.feed-item {
+	display: block;
+	margin: 0;
+	padding: 7px;
+	min-height: 20px;
+	border-bottom: 1px solid #ddd;
+	user-select: none;
+}
+
+.feed-item::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	/* https://stackoverflow.com/questions/3559781/google-chrome-extensions-cant-load-local-images-with-css */
+	background-image: url('chrome-extension://__MSG_@@extension_id__/img/folder.png');
+	background-size: 100%;
+}
+
+.feed-item:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.feed-item span {
+	display: block;
+	float: right;
+	color: #0056ff;
+	font-weight: 600;
+}
+
+/* Folder List ------------------------------------------------------- */
+
+#folder-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.folder {
+	display: block;
+	margin: 0;
+	padding: 7px;
+	min-height: 20px;
+	border-bottom: 1px solid #ddd;
+	user-select: none;
+}
+
+.folder::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	/* https://stackoverflow.com/questions/3559781/google-chrome-extensions-cant-load-local-images-with-css */
+	background-image: url('chrome-extension://__MSG_@@extension_id__/img/folder.png');
+	background-size: 100%;
+}
+
+.folder:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.folder span {
+	display: block;
+	float: right;
+	color: #0056ff;
+	font-weight: 600;
+}

@@ -1,0 +1,35 @@
+{
+	"manifest_version" : 2,
+	
+	"name" : "feed.me",
+	"description" : "Lightweight RSS reader that allows for sync across devices logged in to Chrome.",
+	"version" : "1.0",
+	
+	"background" : {
+		"page" : "background.html",
+		"persistent" : false
+	},
+	
+	"browser_action" : {
+		"default_icon" : "img/rss-icon-orange.png",
+		"default_popup" : "popup.html"
+	},
+
+	"content_scripts": [{
+		"matches": ["https://*/*", "http://*/*"],
+		"run_at": "document_idle",
+		"js": ["src/detect.js"]
+	}],
+	
+	"permissions" : [
+		"alarms",
+		"storage",
+		"activeTab",
+		"http://*/*",
+		"https://*/*"
+	],
+
+	"web_accessible_resources" : [
+		"img/*"
+	]
+}
