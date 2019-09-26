@@ -9,19 +9,37 @@ var global = {
 				title: "Programming",
 				folders: [],
 				feeds: [
-					{ title: "programming 1", feedUrl: "", count: 0 },
-					{ title: "programming 2", feedUrl: "", count: 0 },
-					{ title: "programming 3", feedUrl: "", count: 0 },
+					{ title: "Hacker News", feedUrl: "http://news.ycombinator.com/rss" },
+					{ title: "programming 1", feedUrl: "" },
+					{ title: "programming 2", feedUrl: "" },
 				]
 			}
 		],
 		feeds: [
-					{ title: "feed 1", feedUrl: "", count: 0 },
-					{ title: "feed 2", feedUrl: "", count: 0 },
-					{ title: "feed 3", feedUrl: "", count: 0 },
-					{ title: "feed 4", feedUrl: "", count: 0 },
+			{ title: "Almost Looks Like Work", feedUrl: "https://jasmcole.com/feed/" },
+			{ title: "Math \u2229 Programming", feedUrl: "http://blog.echen.me/feeds/all.rss.xml" },
+			{ title: "LingPipe Blog", feedUrl: "https://lingpipe-blog.com/feed/" },
+			{ title: "Terrence Tao", feedUrl: "https://terrytao.wordpress.com/feed" },
 		]
-	}
+	},
+	feedData : {}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+function addNewFeed(feedTitle, feedUrl){
+	global.userFeeds.feeds.push({
+		title: feedTitle,
+		feedUrl:  feedUrl
+	});
+	syncUserFeeds();
+}
+
+function syncUserFeeds(){
+	// sync user feeds / folder hierarchy
+	chrome.storage.local.set({ userFeeds: global.userFeeds }, function () {
+		console.log('\tstorage :: synced user feeds');
+	});
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,10 +48,48 @@ var global = {
 chrome.runtime.onInstalled.addListener(function(){
 	console.log("background.js :: onInstalled()");
 
-	// synced variable
-	chrome.storage.sync.set({color: '#4aa757'}, function(){
-		console.log("the color is green");
+	// check for existing list of feeds
+	chrome.storage.local.get(['userFeeds'], function (result) {
+		if(result && result.userFeeds){
+			console.log("\tstorage :: downloaded existing list of feeds");
+			console.log(result);
+			global.userFeeds = result.userFeeds;
+		} else {
+			console.log("\tstorage :: no existing list of feeds");
+			// use the default feed
+			// TODO: uncomment below -- no defaults!
+			// global.userFeeds = {};
+		}
 	});
+
+	syncUserFeeds();
+
+	chrome.storage.local.getBytesInUse(null, function (bytes) {
+		console.log("local bytes used:", bytes);
+	})
+});
+
+// on startup
+chrome.runtime.onStartup.addListener(function(){
+	console.log("background.js :: onStartup()");
+
+	chrome.storage.local.get(['userFeeds'], function (result) {
+		console.log(result);
+		if (result && result.userFeeds) {
+			console.log("\tstorage :: downloaded existing list of feeds");
+			console.log(result);
+			global.userFeeds = result.userFeeds;
+		} else {
+			console.log("\tstorage :: no existing list of feeds");
+			// use the default feed
+			// TODO: uncomment below -- no defaults!
+			// global.userFeeds = {};
+		}
+	});
+
+	chrome.storage.local.getBytesInUse(null, function (bytes){
+		console.log("local bytes used:", bytes);
+	})
 });
 
 // on alarm
@@ -61,7 +117,6 @@ async function handleDetectedFeeds(feeds){
 	chrome.browserAction.setIcon({ path: "img/rss-icon-blue.png" });
 	// load feed items
 	let result = await loadFeedItems(feeds[0]);
-	console.log(result);
 }
 
 async function handleDetectedNone(){

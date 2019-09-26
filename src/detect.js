@@ -19,8 +19,8 @@ document.querySelectorAll("link[rel=alternate]").forEach(function(elt){
 
 	// get title attribute
 	let title = elt.getAttribute("title");
-	if(title.length > 0) { feed.title = title; }
-	else                 { feed.title = false; }
+	if(title && title.length > 0) { feed.title = title; }
+	else                          { feed.title = false; }
 	
 	// save feed
 	feeds.push(feed);

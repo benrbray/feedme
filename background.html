@@ -2,36 +2,65 @@
 
 <html>
 <head>
-    <script src="src/background.js"></script>
+	<script src="src/background.js"></script>
 </head>
-<body>
-    <!-- Template:  Folder Page -->
-    <template id="folder-page">
-        <div class="page">
-            <!-- Title Bar -->
-            <div class="title-bar">
-                <div id="back-btn" class="title-btn" style="float:left">&lt;</div>
-                Title
-                <div id="plus-btn" class="title-btn" style="float:right">+</div>
-                <div id="plus-btn" class="title-btn" style="float:right">+</div>
-            </div>
-            <!-- Folder List -->
-            <ul id="folder-list"></ul>
-            <!-- Feed List -->
-            <ul id="feed-list"></ul>
-        </div>
-    </template>
-    <!-- Template:  Detected Feeds Page -->
-    <template id="detected-page">
-        <div class="page">
-            <!-- Title Bar -->
-            <div class="title-bar">
-                <div id="back-btn" class="title-btn" style="float:left">&lt;</div>
-                Detected Feeds
-            </div>
-            <!-- Feed List -->
-            <ul id="feed-list"></ul>
-        </div>
-    </template>
+<body><!-- Template:  Folder Page -->
+	<template id="folder-page">
+		<div class="page">
+			<!-- Title Bar -->
+			<div class="title-bar">
+				<div id="back-btn" class="title-btn" style="float:left">&lt;</div>
+				<span id="title-text">Title</span>
+				<div id="plus-btn" class="title-btn" style="float:right">+</div>
+				<div id="markread-btn" class="title-btn" style="float:right"></div>
+			</div>
+			<!-- Folder List -->
+			<ul id="folder-list"></ul>
+			<!-- Feed List -->
+			<ul id="feed-list"></ul>
+		</div>
+	</template>
+	<!-- Template:  Feed Page -->
+	<template id="feed-page">
+		<div class="page">
+			<!-- Title Bar -->
+			<div class="title-bar">
+				<div id="back-btn" class="title-btn" style="float:left">&lt;</div>
+				<span id="title-text">Title</span>
+				<div id="plus-btn" class="title-btn" style="float:right">+</div>
+				<div id="markread-btn" class="title-btn" style="float:right"></div>
+			</div>
+			<!-- Item List -->
+			<ul id="item-list"></ul>
+		</div>
+	</template>
+	<!-- Template:  Add Feed Page -->
+	<template id="add-feed-page">
+		<div class="page">
+			<!-- Title Bar -->
+			<div class="title-bar">
+				<div id="back-btn" class="title-btn" style="float:left">&lt;</div>
+				<span id="title-text">Title</span>
+			</div>
+			<!-- Item List -->
+			<div id="newfeed-form">
+			Title: <input type="text" id="newfeed-title"><br>
+			URL:   <input type="url" id="newfeed-url"><br>
+			<input type="button" id="add-feed-btn" value="Add New Feed">
+			</div>
+		</div>
+	</template>
+	<!-- Template:  Detected Feeds Page -->
+	<template id="detected-page">
+		<div class="page">
+			<!-- Title Bar -->
+			<div class="title-bar">
+				<div id="back-btn" class="title-btn" style="float:left">&lt;</div>
+				Detected Feeds
+			</div>
+			<!-- Feed List -->
+			<ul id="feed-list"></ul>
+		</div>
+	</template>
 </body>
 </html>

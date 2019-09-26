@@ -5,30 +5,10 @@ var backgroundPage = chrome.extension.getBackgroundPage();
 
 // make debugging easier by forwarding popup console output
 function debug(message){
-	backgroundPage.console.log(message);
+	console.log(message);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-class Feed {
-	constructor(name, rssUrl, count){
-		this.name = name;
-		this.rssUrl = rssUrl;
-		this.count = count;
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-// feed data
-var userFeeds = [
-	new Feed("Hacker News", "http://news.ycombinator.com/rss", 128),
-	new Feed("Almost Looks Like Work", "https://jasmcole.com/feed/", 0),
-	new Feed("Math ∩ Programming", "https://jeremykun.com/feed/", 1),
-	new Feed("LingPipe Blog", "https://lingpipe-blog.com/feed/", 0),
-	new Feed("Brandon Amos", "http://bamos.github.io/atom.xml", 3),
-	new Feed("Terrence Tao", "https://terrytao.wordpress.com/feed", 3)
-]
 
 // onload
 window.onload = function(){
@@ -55,25 +35,22 @@ function init(){
 	// initialize views
 	popupContainer = document.getElementById("popup-container");
 	viewController = new ViewController(popupContainer);
+
+	popupContainer.onmousedown = function(evt){
+		switch (evt.button) {
+			case 3: // back button
+				viewController.back();
+				break;
+			case 4: // forward button
+				break;
+		}
+	}
 	
 	// folder page
-	viewController.showFolderPage(backgroundPage.global.userFeeds);
+	viewController.showPage(PageTypes.FOLDER_PAGE, backgroundPage.global.userFeeds);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-function showFeedItems(feedItems){
-	// clear current view
-	debug(feedListElem);
-	removeAllChildren(feedListElem);
-	debug(feedListElem);
-	
-	// display feed items
-	feedItems.forEach(function(feedItem){
-		var listItem = makeFeedItemElem(feedItem);
-		feedListElem.appendChild(listItem);
-	});
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -93,12 +70,15 @@ function makeFeedElem(feed){
 	return feedItem;
 }
 
-function makeFeedItemElem(feedItem){
-	var listItem = document.createElement("div");
-	listItem.className = "feed-item";
-	listItem.appendChild(document.createTextNode(feedItem.title));
-	
-	return listItem;
+function makeArticleElem(article) {
+	// feed item
+	var articleElem = document.createElement("div");
+	articleElem.className = "article";
+
+	var title = (article.title ? article.title : "[UNTITLED]");
+	articleElem.appendChild(document.createTextNode(title));
+
+	return articleElem;
 }
 
 function makeFolderElem(folder){

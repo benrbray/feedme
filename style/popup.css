@@ -6,9 +6,15 @@ body {
 	margin: 0;
 }
 
+:root {
+	--title-height: 40px;
+	--popup-width: 400px;
+	--popup-height: 500px;
+}
+
 #popup-container {
-	width: 300px;
-	height: 400px;
+	width: var(--popup-width);
+	height: var(--popup-height);
 }
 
 /* Pages ---------------------------------------------------------------------*/
@@ -26,7 +32,7 @@ body {
 
 .title-bar {
 	position: relative;
-	height: 40px;
+	height: var(--title-height);
 	
 	text-align: center;
 	line-height: 40px;
@@ -36,16 +42,22 @@ body {
 }
 
 .title-btn {
-	display: inline-block;
+	display: block;
 	width: 30px;
 	height: 30px;
-	margin: 5px;
+	margin: 5px 5px 5px 0;
 	line-height: 30px;
 	font-size: 22px;
 }
 
 .title-btn:hover {
 	background-color: #ddd;
+}
+
+#markread-btn {
+	background-image: url("chrome-extension://__MSG_@@extension_id__/img/mark-unread.png");
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 /* Feed List -----------------------------------------------------------------*/
@@ -71,8 +83,8 @@ body {
 	width: 1em;
 	height: 1em;
 	/* https://stackoverflow.com/questions/3559781/google-chrome-extensions-cant-load-local-images-with-css */
-	background-image: url('chrome-extension://__MSG_@@extension_id__/img/folder.png');
-	background-size: 100%;
+	/*background-image: url('chrome-extension://__MSG_@@extension_id__/img/folder.png');
+	background-size: 100%;*/
 }
 
 .feed-item:hover {
@@ -124,4 +136,44 @@ body {
 	float: right;
 	color: #0056ff;
 	font-weight: 600;
+}
+
+/* Feed List ----------------------------------------------------------------*/
+
+#item-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: calc(100% - var(--title-height));
+	overflow-y: scroll;
+}
+
+.article {
+	display: block;
+	margin: 0;
+	padding: 7px;
+	min-height: 20px;
+	border-bottom: 1px solid #ddd;
+	user-select: none;
+}
+
+.article span {
+	display: block;
+	float: right;
+	color: #0056ff;
+	font-weight: 600;
+}
+
+/* Add Feed Page ------------------------------------------------------------*/
+
+#newfeed-form {
+	padding: 10px;
+}
+
+#newfeed-form input {
+	width: 100%;
+}
+
+#newfeed-url {
+	font-family: monospace;
 }
